@@ -35,7 +35,7 @@ class PinDataStore(private val context: Context) {
     }
 
     suspend fun saveLockInStatus(isLockedIn: Boolean) {
-        Log.d("PinDataStore", "Saving sign in status: $isLockedIn")
+        Log.d("PinDataStore", "Saving lock in status: $isLockedIn")
         context.dataStore.edit { preferences ->
             preferences[LOCKED_IN_KEY] = isLockedIn
         }
@@ -55,7 +55,7 @@ class PinDataStore(private val context: Context) {
 
     val lockInStatusFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
         val value = preferences[LOCKED_IN_KEY] ?: false
-        Log.d("PinDataStore", "Reading sign in status: $value")
+        Log.d("PinDataStore", "Reading lock in status: $value")
         value
     }
 }

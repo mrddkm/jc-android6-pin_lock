@@ -28,7 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    onSignOut: () -> Unit = {},
+    onLockOut: () -> Unit = {},
     viewModel: MainViewModel = koinViewModel()
 ) {
     val pinState by viewModel.pinState.collectAsState()
@@ -100,7 +100,7 @@ fun MainScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Signed In:")
+                    Text(text = "Locked In:")
                     Text(
                         text = if (pinState.isLockedIn) "✓ Yes" else "✗ No",
                         color = if (pinState.isLockedIn)
@@ -131,7 +131,7 @@ fun MainScreen(
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
                 Text(
-                    text = "The app will automatically sign you out when closed or minimized for security reasons. You will need to enter your PIN again when you reopen the app.",
+                    text = "The app will automatically lock you out when closed or minimized for security reasons. You will need to enter your PIN again when you reopen the app.",
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
@@ -139,11 +139,11 @@ fun MainScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Manual Sign Out Button
+        /*Manual Lock Out Button*/
         Button(
             onClick = {
                 viewModel.lockOut()
-                onSignOut()
+                onLockOut()
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
@@ -151,7 +151,7 @@ fun MainScreen(
             )
         ) {
             Text(
-                text = "Sign Out",
+                text = "Lock App",
                 color = MaterialTheme.colorScheme.onError
             )
         }

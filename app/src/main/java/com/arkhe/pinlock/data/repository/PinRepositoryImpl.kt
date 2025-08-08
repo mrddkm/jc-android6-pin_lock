@@ -34,11 +34,11 @@ class PinRepositoryImpl(
             dataStore.pinCreatedFlow,
             dataStore.pinCodeFlow,
             dataStore.lockInStatusFlow
-        ) { isCreated, pinCode, isSignedIn ->
+        ) { isCreated, pinCode, isLockedIn ->
             PinState(
                 isCreated = isCreated,
                 pinCode = pinCode,
-                isLockedIn = isSignedIn
+                isLockedIn = isLockedIn
             )
         }
     }

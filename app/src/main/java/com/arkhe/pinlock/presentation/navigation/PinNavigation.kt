@@ -28,7 +28,7 @@ fun PinNavigation(
         pinState.pinCode.isNotEmpty() && !pinState.isLockedIn -> Screen.LockPin.route
         /*If everything is valid -> Main Screen*/
         pinState.pinCode.isNotEmpty() && pinState.isLockedIn -> Screen.Main.route
-        /*Default fallback -> Sign In*/
+        /*Default fallback -> Lock In*/
         else -> Screen.LockPin.route
     }
 
