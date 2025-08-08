@@ -9,18 +9,22 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.arkhe.pinlock.di.appModule
 import com.arkhe.pinlock.domain.model.PinState
+import com.arkhe.pinlock.domain.repository.PinRepository
 import com.arkhe.pinlock.domain.usecase.GetPinStateUseCase
 import com.arkhe.pinlock.presentation.navigation.PinNavigation
 import com.arkhe.pinlock.presentation.theme.PinPadTheme
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class MainActivity : ComponentActivity() {
     private val getPinStateUseCase: GetPinStateUseCase by inject()
+    private val pinRepository: PinRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,20 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        lifecycleScope.launch {
+            pinRepository.signOut()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycleScope.launch {
+            pinRepository.signOut()
         }
     }
 }

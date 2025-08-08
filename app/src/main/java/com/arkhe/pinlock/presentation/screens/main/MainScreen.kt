@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
+    onSignOut: () -> Unit = {},
     viewModel: MainViewModel = koinViewModel()
 ) {
     val pinState by viewModel.pinState.collectAsState()
@@ -121,18 +124,36 @@ fun MainScreen(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = "Informasi",
+                    text = "Information",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
                 Text(
-                    text = "Aplikasi PIN-Pad berhasil diatur dan siap digunakan. " +
-                            "Data disimpan secara lokal menggunakan DataStore Preferences.",
+                    text = "The app will automatically sign you out when closed or minimized for security reasons. You will need to enter your PIN again when you reopen the app.",
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Manual Sign Out Button
+        Button(
+            onClick = {
+                viewModel.signOut()
+                onSignOut()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.error
+            )
+        ) {
+            Text(
+                text = "Sign Out",
+                color = MaterialTheme.colorScheme.onError
+            )
         }
     }
 }

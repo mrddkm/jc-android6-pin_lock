@@ -20,10 +20,29 @@ fun PinNavigation(
     navController: NavHostController,
     pinState: PinState
 ) {
+    /*Improved navigation logic for security*/
     val startDestination = when {
+        /*If PIN not created or empty -> Create PIN*/
         !pinState.isCreated || pinState.pinCode.isEmpty() -> Screen.CreatePin.route
+        /*If PIN created but not signed in -> Sign In (SECURITY: Always require sign in)*/
         pinState.pinCode.isNotEmpty() && !pinState.isSignedIn -> Screen.SignIn.route
-        else -> Screen.Main.route
+        /*If everything is valid -> Main Screen*/
+        pinState.pinCode.isNotEmpty() && pinState.isSignedIn -> Screen.Main.route
+        /*Default fallback -> Sign In*/
+        else -> Screen.SignIn.route
+    }
+
+    /*Navigate to correct screen when state changes*/
+    LaunchedEffect(pinState) {
+        val currentRoute = navController.currentDestination?.route
+
+        /*Auto navigate to SignIn when signed out (security feature)*/
+        if (pinState.isCreated && pinState.pinCode.isNotEmpty() &&
+            !pinState.isSignedIn && currentRoute == Screen.Main.route) {
+            navController.navigate(Screen.SignIn.route) {
+                popUpTo(Screen.Main.route) { inclusive = true }
+            }
+        }
     }
 
     NavHost(

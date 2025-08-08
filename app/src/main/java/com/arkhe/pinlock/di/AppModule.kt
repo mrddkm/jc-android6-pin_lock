@@ -30,5 +30,5 @@ val appModule = module {
     // ViewModels
     viewModel { CreatePinViewModel(get()) }
     viewModel { SignInViewModel(get(), get()) }
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
 }
