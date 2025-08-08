@@ -66,7 +66,8 @@ fun CreatePinScreen(
 
         PinPadComponent(
             onNumberClick = viewModel::onPinDigitEntered,
-            onBackspaceClick = viewModel::onBackspace
+            onBackspaceClick = viewModel::onBackspace,
+            onClearClick = viewModel::onClearPin
         )
 
         if (uiState.error != null) {

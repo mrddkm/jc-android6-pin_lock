@@ -6,12 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arkhe.pinlock.domain.repository.PinRepository
+import com.arkhe.pinlock.domain.usecase.ResetPinUseCase
 import com.arkhe.pinlock.domain.usecase.ValidatePinUseCase
 import kotlinx.coroutines.launch
 
 class LockPinViewModel(
     private val validatePinUseCase: ValidatePinUseCase,
     private val repository: PinRepository,
+    private val resetPinUseCase: ResetPinUseCase,
 ) : ViewModel() {
 
     var uiState by mutableStateOf(LockPinUiState())
@@ -37,6 +39,32 @@ class LockPinViewModel(
                 currentPin = uiState.currentPin.dropLast(1),
                 error = null
             )
+        }
+    }
+
+    fun onClearPin() {
+        uiState = uiState.copy(
+            currentPin = "",
+            error = null
+        )
+    }
+
+    fun onForgotPin() {
+        viewModelScope.launch {
+            try {
+                resetPinUseCase()
+                uiState = uiState.copy(
+                    shouldNavigateToCreatePin = true,
+                    currentPin = "",
+                    error = null,
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                uiState = uiState.copy(
+                    error = "Failed to reset PIN: ${e.message}",
+                    isLoading = false
+                )
+            }
         }
     }
 
@@ -74,5 +102,6 @@ data class LockPinUiState(
     val currentPin: String = "",
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
+    val shouldNavigateToCreatePin: Boolean = false,
     val error: String? = null
 )

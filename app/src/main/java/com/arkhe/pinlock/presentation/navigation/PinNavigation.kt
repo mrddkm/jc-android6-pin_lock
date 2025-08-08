@@ -43,6 +43,15 @@ fun PinNavigation(
                 popUpTo(Screen.Main.route) { inclusive = true }
             }
         }
+
+        /*Auto navigate to CreatePin when PIN is reset (forgot PIN feature)*/
+        if (!pinState.isCreated || pinState.pinCode.isEmpty()) {
+            if (currentRoute != Screen.CreatePin.route) {
+                navController.navigate(Screen.CreatePin.route) {
+                    popUpTo(0) { inclusive = true } // Clear entire back stack
+                }
+            }
+        }
     }
 
     NavHost(
@@ -64,6 +73,11 @@ fun PinNavigation(
                 onNavigateToMain = {
                     navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.LockPin.route) { inclusive = true }
+                    }
+                },
+                onNavigateToCreatePin = {
+                    navController.navigate(Screen.CreatePin.route) {
+                        popUpTo(0) { inclusive = true } // Clear entire back stack
                     }
                 }
             )

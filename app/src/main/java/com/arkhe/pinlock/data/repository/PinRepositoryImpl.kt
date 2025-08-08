@@ -29,6 +29,12 @@ class PinRepositoryImpl(
         dataStore.saveLockInStatus(false)
     }
 
+    override suspend fun resetPin() {
+        dataStore.savePinCode("")
+        dataStore.savePinCreated(false)
+        dataStore.saveLockInStatus(false)
+    }
+
     override fun getPinState(): Flow<PinState> {
         return combine(
             dataStore.pinCreatedFlow,

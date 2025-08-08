@@ -13,6 +13,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LockPinScreen(
     onNavigateToMain: () -> Unit,
+    onNavigateToCreatePin: () -> Unit = {},
     viewModel: LockPinViewModel = koinViewModel()
 ) {
     val uiState = viewModel.uiState
@@ -36,6 +38,12 @@ fun LockPinScreen(
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
             onNavigateToMain()
+        }
+    }
+
+    LaunchedEffect(uiState.shouldNavigateToCreatePin) {
+        if (uiState.shouldNavigateToCreatePin) {
+            onNavigateToCreatePin()
         }
     }
 
@@ -84,8 +92,28 @@ fun LockPinScreen(
                 if (!uiState.isLoading) {
                     viewModel.onBackspace()
                 }
+            },
+            onClearClick = {
+                if (!uiState.isLoading) {
+                    viewModel.onClearPin()
+                }
             }
         )
+
+        TextButton(
+            onClick = {
+                if (!uiState.isLoading) {
+                    viewModel.onForgotPin()
+                }
+            },
+            enabled = !uiState.isLoading
+        ) {
+            Text(
+                text = "Forgot PIN?",
+                color = MaterialTheme.colorScheme.primary,
+                fontSize = 14.sp
+            )
+        }
 
         if (uiState.error != null) {
             Spacer(modifier = Modifier.height(24.dp))

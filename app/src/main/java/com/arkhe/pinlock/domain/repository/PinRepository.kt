@@ -8,5 +8,6 @@ interface PinRepository {
     suspend fun validatePin(pinCode: String): Boolean
     suspend fun lockIn()
     suspend fun lockOut()
+    suspend fun resetPin()
     fun getPinState(): Flow<PinState>
 }

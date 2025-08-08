@@ -34,6 +34,13 @@ class CreatePinViewModel(
         }
     }
 
+    fun onClearPin() {
+        uiState = uiState.copy(
+            currentPin = "",
+            error = null
+        )
+    }
+
     private fun handlePinComplete(pin: String) {
         if (!uiState.isConfirmation) {
             uiState = uiState.copy(
