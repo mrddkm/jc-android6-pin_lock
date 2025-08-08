@@ -8,7 +8,7 @@ import com.arkhe.pinlock.domain.usecase.GetPinStateUseCase
 import com.arkhe.pinlock.domain.usecase.ValidatePinUseCase
 import com.arkhe.pinlock.presentation.screens.create.CreatePinViewModel
 import com.arkhe.pinlock.presentation.screens.main.MainViewModel
-import com.arkhe.pinlock.presentation.screens.signin.SignInViewModel
+import com.arkhe.pinlock.presentation.screens.lockpin.LockPinViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -29,6 +29,6 @@ val appModule = module {
 
     // ViewModels
     viewModel { CreatePinViewModel(get()) }
-    viewModel { SignInViewModel(get(), get()) }
+    viewModel { LockPinViewModel(get(), get()) }
     viewModel { MainViewModel(get(), get()) }
 }

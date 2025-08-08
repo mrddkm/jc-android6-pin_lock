@@ -1,4 +1,4 @@
-package com.arkhe.pinlock.presentation.screens.signin
+package com.arkhe.pinlock.presentation.screens.lockpin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,19 +19,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkhe.pinlock.presentation.components.PinIndicator
 import com.arkhe.pinlock.presentation.components.PinPadComponent
-import com.arkhe.pinlock.presentation.theme.PinPadTheme
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(
+fun LockPinScreen(
     onNavigateToMain: () -> Unit,
-    viewModel: SignInViewModel = koinViewModel()
+    viewModel: LockPinViewModel = koinViewModel()
 ) {
     val uiState = viewModel.uiState
 
@@ -110,15 +108,5 @@ fun SignInScreen(
         }
 
         Spacer(modifier = Modifier.height(32.dp))
-    }
-}
-
-@Preview
-@Composable
-fun SignInScreenPreview() {
-    PinPadTheme {
-        SignInScreen(
-            onNavigateToMain = {}
-        )
     }
 }

@@ -30,9 +30,9 @@ class MainViewModel(
         }
     }
 
-    fun signOut() {
+    fun lockOut() {
         viewModelScope.launch {
-            pinRepository.signOut()
+            pinRepository.lockOut()
         }
     }
 }

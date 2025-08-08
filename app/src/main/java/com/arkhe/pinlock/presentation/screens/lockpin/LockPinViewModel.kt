@@ -1,4 +1,4 @@
-package com.arkhe.pinlock.presentation.screens.signin
+package com.arkhe.pinlock.presentation.screens.lockpin
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,12 +9,12 @@ import com.arkhe.pinlock.domain.repository.PinRepository
 import com.arkhe.pinlock.domain.usecase.ValidatePinUseCase
 import kotlinx.coroutines.launch
 
-class SignInViewModel(
+class LockPinViewModel(
     private val validatePinUseCase: ValidatePinUseCase,
     private val repository: PinRepository,
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(SignInUiState())
+    var uiState by mutableStateOf(LockPinUiState())
         private set
 
     fun onPinDigitEntered(digit: String) {
@@ -46,7 +46,7 @@ class SignInViewModel(
             try {
                 val isValid = validatePinUseCase(pin)
                 if (isValid) {
-                    repository.signIn()
+                    repository.lockIn()
                     uiState = uiState.copy(
                         isSuccess = true,
                         isLoading = false,
@@ -70,7 +70,7 @@ class SignInViewModel(
     }
 }
 
-data class SignInUiState(
+data class LockPinUiState(
     val currentPin: String = "",
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,

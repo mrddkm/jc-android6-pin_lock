@@ -102,8 +102,8 @@ fun MainScreen(
                 ) {
                     Text(text = "Signed In:")
                     Text(
-                        text = if (pinState.isSignedIn) "✓ Yes" else "✗ No",
-                        color = if (pinState.isSignedIn)
+                        text = if (pinState.isLockedIn) "✓ Yes" else "✗ No",
+                        color = if (pinState.isLockedIn)
                             MaterialTheme.colorScheme.primary
                         else
                             MaterialTheme.colorScheme.error
@@ -142,7 +142,7 @@ fun MainScreen(
         // Manual Sign Out Button
         Button(
             onClick = {
-                viewModel.signOut()
+                viewModel.lockOut()
                 onSignOut()
             },
             modifier = Modifier.fillMaxWidth(),

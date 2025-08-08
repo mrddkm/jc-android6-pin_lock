@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface PinRepository {
     suspend fun createPin(pinCode: String)
     suspend fun validatePin(pinCode: String): Boolean
-    suspend fun signIn()
-    suspend fun signOut()
+    suspend fun lockIn()
+    suspend fun lockOut()
     fun getPinState(): Flow<PinState>
 }

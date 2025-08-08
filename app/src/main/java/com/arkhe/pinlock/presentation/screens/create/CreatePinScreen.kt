@@ -25,14 +25,14 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreatePinScreen(
-    onNavigateToSignIn: () -> Unit,
+    onNavigateToLockIn: () -> Unit,
     viewModel: CreatePinViewModel = koinViewModel()
 ) {
     val uiState = viewModel.uiState
 
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
-            onNavigateToSignIn()
+            onNavigateToLockIn()
         }
     }
 

@@ -21,24 +21,24 @@ class PinRepositoryImpl(
         return storedPin == pinCode
     }
 
-    override suspend fun signIn() {
-        dataStore.saveSignInStatus(true)
+    override suspend fun lockIn() {
+        dataStore.saveLockInStatus(true)
     }
 
-    override suspend fun signOut() {
-        dataStore.saveSignInStatus(false)
+    override suspend fun lockOut() {
+        dataStore.saveLockInStatus(false)
     }
 
     override fun getPinState(): Flow<PinState> {
         return combine(
             dataStore.pinCreatedFlow,
             dataStore.pinCodeFlow,
-            dataStore.signInStatusFlow
+            dataStore.lockInStatusFlow
         ) { isCreated, pinCode, isSignedIn ->
             PinState(
                 isCreated = isCreated,
                 pinCode = pinCode,
-                isSignedIn = isSignedIn
+                isLockedIn = isSignedIn
             )
         }
     }

@@ -57,14 +57,14 @@ class MainActivity : ComponentActivity() {
     override fun onPause() {
         super.onPause()
         lifecycleScope.launch {
-            pinRepository.signOut()
+            pinRepository.lockOut()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         lifecycleScope.launch {
-            pinRepository.signOut()
+            pinRepository.lockOut()
         }
     }
 }
